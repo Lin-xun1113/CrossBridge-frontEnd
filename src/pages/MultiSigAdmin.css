@@ -1,0 +1,95 @@
+/* 多签钱包管理页面样式 */
+
+/* 基础卡片样式 */
+.multisig-card {
+  margin-bottom: 20px;
+}
+
+/* 钱包状态信息样式 */
+.wallet-status-container {
+  margin-bottom: 20px;
+}
+
+.wallet-status-info {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.wallet-status-item {
+  flex: 1;
+  min-width: 200px;
+}
+
+/* 表格响应式样式 */
+.responsive-table .ant-table-cell {
+  white-space: normal;
+  word-break: break-word;
+}
+
+/* 地址显示样式 */
+.address-display {
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 响应式布局调整 */
+@media (max-width: 768px) {
+  .wallet-status-info {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .wallet-status-item {
+    width: 100%;
+  }
+  
+  .address-display {
+    max-width: 150px;
+  }
+}
+
+@media (max-width: 576px) {
+  .multisig-form .ant-form-item {
+    margin-bottom: 12px;
+  }
+  
+  .address-display {
+    max-width: 120px;
+  }
+  
+  /* 在小屏幕上更改表格布局为卡片式 */
+  .responsive-table.small-screen .ant-table-tbody > tr {
+    display: block;
+    border: 1px solid #f0f0f0;
+    margin-bottom: 16px;
+    padding: 8px;
+    border-radius: 4px;
+  }
+  
+  .responsive-table.small-screen .ant-table-tbody > tr > td {
+    display: block;
+    border: none;
+    padding: 6px 8px;
+  }
+  
+  .responsive-table.small-screen .ant-table-tbody > tr > td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    display: inline-block;
+    width: 100%;
+  }
+  
+  .responsive-table.small-screen .ant-table-thead {
+    display: none;
+  }
+}
+
+/* 暗色主题适配 */
+.dark-theme .responsive-table.small-screen .ant-table-tbody > tr {
+  border-color: #303030;
+  background-color: #1f1f1f;
+}

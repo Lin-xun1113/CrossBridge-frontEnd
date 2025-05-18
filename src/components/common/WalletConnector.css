@@ -1,0 +1,475 @@
+.wallet-connector {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  max-width: 100%;
+}
+
+/* 覆盖一些RainbowKit默认样式以使其更加响应式 */
+[data-rk] {
+  --rk-radii-connectButton: 8px;
+  --rk-fonts-body: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --rk-modal-width: 100%;
+  --rk-modal-border-radius: 16px;
+}
+
+/* 强制覆盖 RainbowKit 的所有模态窗口样式 */
+:root {
+  --rk-z-index: 9999;
+}
+
+/* 全局重置 RainbowKit 的样式 */
+[data-rk] * {
+  box-sizing: border-box !important;
+}
+
+/* 隐藏原始的背景遮罩 */
+[data-rk] div[data-rk-overlay-backdrop],
+[data-rk] [role="dialog"] div[data-rk-overlay-backdrop],
+[data-rk] [role="dialog"][data-rk-overlay-backdrop] {
+  display: none !important;
+}
+
+/* 强制设置对话框属性 */
+[data-rk] [role="dialog"] {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background-color: rgba(0, 0, 0, 0.5) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  z-index: 9999 !important;
+  padding: 16px !important;
+}
+
+/* 自定义背景遮罩 */
+[data-rk] .rk-modal-backdrop,
+[data-rk] .rk-account-modal-backdrop,
+[data-rk] div[data-overlay-container] {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background-color: rgba(0, 0, 0, 0.5) !important;
+  z-index: var(--rk-z-index) !important;
+}
+
+/* 强制设置模态窗口容器样式 */
+[data-rk] .rk-modal-container,
+[data-rk] .rk-account-modal-container,
+[data-rk] div[data-rk-modal-container] {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: calc(var(--rk-z-index) + 1) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 16px !important;
+  box-sizing: border-box !important;
+  margin: 0 !important;
+  overflow: auto !important;
+}
+
+[data-rk] .rk-modal-content,
+[data-rk] .rk-account-modal-content,
+[data-rk] div[data-rk-modal-content] {
+  max-width: 420px !important;
+  width: 100% !important;
+  margin: 0 auto !important;
+  border-radius: 16px !important;
+  overflow: hidden !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
+  position: relative !important;
+  transform: translateY(0) !important;
+  background-color: #fff !important;
+}
+
+.dark-theme [data-rk] .rk-modal-content,
+.dark-theme [data-rk] .rk-account-modal-content,
+.dark-theme [data-rk] div[data-rk-modal-content] {
+  background-color: #1a1b1f !important;
+}
+
+/* 确保滚动条样式在弹出窗口内部正确显示 */
+[data-rk] .rk-modal-content::-webkit-scrollbar,
+[data-rk] .rk-account-modal-content::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+[data-rk] .rk-modal-content::-webkit-scrollbar-track,
+[data-rk] .rk-account-modal-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+[data-rk] .rk-modal-content::-webkit-scrollbar-thumb,
+[data-rk] .rk-account-modal-content::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+.dark-theme [data-rk] .rk-modal-content::-webkit-scrollbar-thumb,
+.dark-theme [data-rk] .rk-account-modal-content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* 适配夜间模式 */
+.dark-theme [data-rk] {
+  --rk-colors-accentColor: #3498db;
+  --rk-colors-accentColorForeground: #fff;
+  --rk-colors-actionButtonBorder: rgba(255, 255, 255, 0.04);
+  --rk-colors-actionButtonBorderMobile: rgba(255, 255, 255, 0.08);
+  --rk-colors-actionButtonSecondaryBackground: rgba(255, 255, 255, 0.08);
+  --rk-colors-closeButton: rgba(255, 255, 255, 0.7);
+  --rk-colors-closeButtonBackground: rgba(255, 255, 255, 0.08);
+  --rk-colors-connectButtonBackground: #1f1f1f;
+  --rk-colors-connectButtonBackgroundError: #1f1f1f;
+  --rk-colors-connectButtonInnerBackground: linear-gradient(0deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.15));
+  --rk-colors-connectButtonText: #fff;
+  --rk-colors-connectButtonTextError: #ff494a;
+  --rk-colors-connectionIndicator: #30e000;
+  --rk-colors-error: #ff494a;
+  --rk-colors-generalBorder: rgba(255, 255, 255, 0.08);
+  --rk-colors-generalBorderDim: rgba(255, 255, 255, 0.04);
+  --rk-colors-menuItemBackground: rgba(255, 255, 255, 0.08);
+  --rk-colors-modalBackdrop: rgba(0, 0, 0, 0.5);
+  --rk-colors-modalBackground: #1a1b1f;
+  --rk-colors-modalBorder: rgba(255, 255, 255, 0.08);
+  --rk-colors-modalText: #fff;
+  --rk-colors-modalTextDim: rgba(255, 255, 255, 0.7);
+  --rk-colors-modalTextSecondary: rgba(255, 255, 255, 0.6);
+  --rk-colors-profileAction: rgba(255, 255, 255, 0.08);
+  --rk-colors-profileActionHover: rgba(255, 255, 255, 0.12);
+  --rk-colors-profileForeground: rgba(255, 255, 255, 0.08);
+  --rk-colors-selectedOptionBorder: rgba(255, 255, 255, 0.1);
+  --rk-colors-standby: #ffd641;
+}
+
+@media (max-width: 576px) {
+  [data-rk] .rk-modal-content {
+    max-width: 100% !important;
+    border-radius: 12px !important;
+  }
+  
+  [data-rk] .rk-account-button {
+    padding: 8px !important;
+  }
+}
+
+@media (max-width: 400px) {
+  [data-rk] .rk-modal-container {
+    padding: 4px !important;
+  }
+  
+  [data-rk] .rk-modal-content {
+    border-radius: 8px !important;
+  }
+}
+
+/* 自定义RainbowKit钱包按钮样式 */
+[data-rk] button {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 弹出窗口内部元素的响应式样式 */
+[data-rk] .rk-wallet-option {
+  padding: 12px !important;
+  border-radius: 12px !important;
+  margin: 4px 0 !important;
+  transition: all 0.2s ease !important;
+}
+
+[data-rk] .rk-wallet-option:hover {
+  transform: translateY(-2px) !important;
+}
+
+[data-rk] .rk-wallet-option-content {
+  gap: 12px !important;
+  align-items: center !important;
+}
+
+[data-rk] .rk-wallet-option-content-icon {
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+}
+
+/* 调整弹出窗口内的文字和按钮 */
+[data-rk] .rk-modal-heading {
+  font-size: 18px !important;
+  font-weight: 600 !important;
+  margin-bottom: 16px !important;
+  text-align: center !important;
+}
+
+[data-rk] .rk-modal-close-button {
+  top: 12px !important;
+  right: 12px !important;
+  background-color: rgba(0, 0, 0, 0.05) !important;
+  border-radius: 50% !important;
+  width: 28px !important;
+  height: 28px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.dark-theme [data-rk] .rk-modal-close-button {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+@media (max-width: 576px) {
+  [data-rk] .rk-wallet-option {
+    padding: 10px !important;
+  }
+  
+  [data-rk] .rk-wallet-option-content {
+    gap: 8px !important;
+  }
+  
+  [data-rk] .rk-wallet-option-content-icon {
+    width: 32px !important;
+    height: 32px !important;
+  }
+  
+  [data-rk] .rk-wallet-option-content-info-name {
+    font-size: 14px !important;
+  }
+  
+  [data-rk] .rk-wallet-option-content-info-description {
+    font-size: 12px !important;
+  }
+}
+
+@media (max-width: 400px) {
+  [data-rk] .rk-wallet-option {
+    padding: 8px !important;
+  }
+  
+  [data-rk] .rk-wallet-option-content-icon {
+    width: 28px !important;
+    height: 28px !important;
+  }
+  
+  [data-rk] .rk-wallet-option-content-info-name {
+    font-size: 13px !important;
+  }
+  
+  [data-rk] .rk-wallet-option-content-info-description {
+    font-size: 11px !important;
+  }
+}
+
+/* 已连接钱包后的弹出窗口样式 */
+[data-rk] .rk-account-modal-container {
+  max-width: 100% !important;
+  width: 100% !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  z-index: 9999 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+[data-rk] .rk-account-modal-card {
+  max-width: 360px !important;
+  width: 100% !important;
+  margin: 0 auto !important;
+  padding: 16px !important;
+  border-radius: 16px !important;
+  overflow: hidden !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
+}
+
+@media (max-width: 576px) {
+  [data-rk] .rk-account-modal-card {
+    max-width: 100% !important;
+    padding: 12px !important;
+  }
+  
+  [data-rk] .rk-account-modal-address {
+    font-size: 14px !important;
+  }
+  
+  [data-rk] .rk-account-modal-balance {
+    font-size: 14px !important;
+  }
+  
+  [data-rk] .rk-account-modal-action {
+    padding: 8px !important;
+    font-size: 14px !important;
+  }
+}
+
+@media (max-width: 400px) {
+  [data-rk] .rk-account-modal-card {
+    padding: 10px !important;
+  }
+  
+  [data-rk] .rk-account-modal-address {
+    font-size: 13px !important;
+  }
+  
+  [data-rk] .rk-account-modal-balance {
+    font-size: 13px !important;
+  }
+  
+  [data-rk] .rk-account-modal-action {
+    padding: 6px !important;
+    font-size: 13px !important;
+  }
+}
+
+.wallet-menu-item {
+  padding: 4px 0;
+  white-space: nowrap;
+}
+
+.wallet-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.network-badge {
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  background-color: #e6f7ff;
+  border: 1px solid #91d5ff;
+}
+
+.network-badge.bsc {
+  background-color: #fff7e6;
+  border: 1px solid #ffd591;
+  color: #d46b08;
+}
+
+.network-badge.magnet {
+  background-color: #f6ffed;
+  border: 1px solid #b7eb8f;
+  color: #52c41a;
+}
+
+.network-badge.unknown {
+  background-color: #fff1f0;
+  border: 1px solid #ffa39e;
+  color: #cf1322;
+}
+
+/* 特定屏幕尺寸的钱包连接器样式 */
+
+/* 中屏幕尺寸样式 (768px以下) */
+.wallet-connector-medium [data-rk] button {
+  max-width: 220px;
+  padding: 8px 12px !important;
+  font-size: 14px !important;
+}
+
+.wallet-connector-medium [data-rk] button span {
+  max-width: 120px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 小屏幕尺寸样式 (576px以下) */
+.wallet-connector-small [data-rk] button {
+  max-width: 170px;
+  padding: 6px 10px !important;
+  min-height: 34px !important;
+  font-size: 13px !important;
+}
+
+.wallet-connector-small [data-rk] button span {
+  max-width: 90px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 超小屏幕尺寸样式 (400px以下) */
+.wallet-connector-xs [data-rk] button {
+  max-width: 110px !important;
+  padding: 4px 6px !important;
+  min-height: 30px !important;
+  font-size: 11px !important;
+}
+
+.wallet-connector-xs [data-rk] button span {
+  max-width: 70px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* RainbowKit样式调整 */
+[data-rk] {
+  --rk-radii-connectButton: 6px;
+  --rk-fonts-body: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* 响应式基础调整 */
+@media (max-width: 768px) {
+  .wallet-connector {
+    margin-left: 8px;
+  }
+  
+  [data-rk] button {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+}
+
+@media (max-width: 576px) {
+  /* 改进头部布局 */
+  .header .header-right {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  
+  /* 确保钱包容器不会超出可用空间 */
+  .wallet-connector {
+    max-width: 180px;
+  }
+  
+  /* 在小屏幕上隐藏RainbowKit不必要的元素 */
+  [data-rk] [data-rk="balance"] {
+    display: none !important;
+  }
+}
+
+@media (max-width: 400px) {
+  .wallet-connector {
+    max-width: 140px;
+  }
+  
+  /* 确保在超小屏幕上不超出范围 */
+  .header-right {
+    flex-shrink: 1;
+    min-width: 0;
+  }
+}

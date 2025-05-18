@@ -1,9 +1,10 @@
 [build]
-  command = "npm install --legacy-peer-deps && npm run build"
+  command = "npm install --force && npm run build:netlify"
   publish = "build"
 
 [build.environment]
   NODE_VERSION = "16"
+  NPM_FLAGS = "--force --no-audit --no-fund"
 
 # 这个配置确保所有路由都重定向到index.html，以支持React Router的单页应用路由
 [[redirects]]

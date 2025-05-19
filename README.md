@@ -4,6 +4,13 @@
 
 Cross-Bridge是一个连接BSC和Magnet POW链的去中心化跨链桥前端应用。它允许用户安全地在这两条链之间转移MAG代币，使用多签钱包技术和验证节点确保资产安全。
 
+## 相关项目
+
+MAG跨链桥生态系统由多个组件组成，您可以访问以下相关项目：
+
+- **[跨链桥验证者节点](https://github.com/Lin-xun1113/Validator-service)** - 负责验证和处理跨链交易
+- **[跨链桥智能合约](https://github.com/Lin-xun1113/CrossBridge-Contract/)** - 在BSC链上的代币合约与桥接合约，在Magnet链上负责锁定释放资金的多签钱包
+
 ## 功能特点
 
 - **双向跨链转账**：支持BSC向Magnet链和Magnet链向BSC的双向资产转移
